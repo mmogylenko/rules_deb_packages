@@ -1,0 +1,24 @@
+load("@rules_deb_packages//:update_deb_packages.bzl", "update_deb_packages")
+
+#load("@ubuntu_jammy_amd64//debs:deb_packages.bzl", "ubuntu_jammy_amd64")
+load("@ubuntu_jammy_arm64//debs:deb_packages.bzl", "ubuntu_jammy_arm64")
+load("@rules_oci//oci:defs.bzl", "oci_image")
+
+update_deb_packages(
+    name = "update_deb_packages",
+    bzl_files = [
+        "ubuntu_jammy_amd64.bzl",
+        "ubuntu_jammy_arm64.bzl",
+    ],
+    pgp_keys = [
+        "@ubuntu_jammy_key//file",
+    ],
+)
+
+oci_image(
+    name = "test",
+    base = "@ubuntu",
+    tars = [
+        ubuntu_jammy_arm64["curl"],
+    ],
+)

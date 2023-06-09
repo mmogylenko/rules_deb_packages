@@ -24,12 +24,12 @@ def deb_packages_dependencies():
         maybe(
             http_file,
             name = "update_deb_packages_{}".format(platform),
+            executable = True,
             sha256 = BINARY[LATEST_VERSION][platform],
             urls = [
                 #"https://github.com/mmogylenko/rules_deb_packages/releases/download/v{}/update_deb_packages_{}".format(version, platform),
                 "http://localhost:8080/update_deb_packages_{}".format(platform),
             ],
-            build_file_content = "exports_files(['update_deb_packages'])",
         )
         for platform in BINARY[LATEST_VERSION].keys()
     ]

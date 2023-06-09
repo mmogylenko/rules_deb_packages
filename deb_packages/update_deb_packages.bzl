@@ -55,9 +55,8 @@ def update_deb_packages(name, pgp_keys, **kwargs):
         update_deb_packages_exec = select({
             "@bazel_tools//src/conditions:linux_aarch64": Label("@update_deb_packages_linux_arm64//file"),
             "@bazel_tools//src/conditions:linux_x86_64": Label("@update_deb_packages_linux_amd64//file"),
-            "@bazel_tools//src/conditions:windows": Label("@update_deb_packages_windows_amd64//file"),
             "@bazel_tools//src/conditions:darwin_x86_64": Label("@update_deb_packages_darwin_amd64//file"),
-            "@bazel_tools//src/conditions:darwin_x86_64": Label("@update_deb_packages_darwin_arm64//file"),
+            "@bazel_tools//src/conditions:darwin_arm64": Label("@update_deb_packages_darwin_arm64//file"),
         }),
         **kwargs
     )
