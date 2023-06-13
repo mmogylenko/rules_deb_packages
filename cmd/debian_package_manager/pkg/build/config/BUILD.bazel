@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "config",
+    srcs = [
+        "architectures.go",
+        "distros.go",
+        "packages.go",
+        "snapshots.go",
+    ],
+    importpath = "github.com/mmogylenko/rules_deb_packages/cmd/debian_package_manager/pkg/build/config",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_pkg_errors//:go_default_library",
+        "@in_gopkg_yaml_v3//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "config_test",
+    srcs = ["packages_test.go"],
+    embed = [":config"],
+)

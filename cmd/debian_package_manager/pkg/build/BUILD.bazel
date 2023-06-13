@@ -1,0 +1,29 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "build",
+    srcs = [
+        "bazel.go",
+        "build.go",
+    ],
+    importpath = "github.com/mmogylenko/rules_deb_packages/cmd/debian_package_manager/pkg/build",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//cmd/debian_package_manager/pkg/build/config",
+        "//cmd/debian_package_manager/pkg/deb",
+        "//cmd/debian_package_manager/pkg/rhttp",
+        "@com_github_pkg_errors//:go_default_library",
+        "@com_github_ulikunitz_xz//:go_default_library",
+        "@org_golang_x_sync//errgroup:go_default_library",
+    ],
+)
+
+go_test(
+    name = "build_test",
+    srcs = ["bazel_test.go"],
+    embed = [":build"],
+    deps = [
+        "//cmd/debian_package_manager/pkg/deb",
+        "@com_github_google_go_cmp//cmp:go_default_library",
+    ],
+)
