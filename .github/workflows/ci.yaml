@@ -65,6 +65,7 @@ jobs:
           - cmd/debian_package_manager
 
     steps:
+      - uses: actions/checkout@v3
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
