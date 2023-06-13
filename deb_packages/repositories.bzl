@@ -23,7 +23,7 @@ def deb_packages_dependencies():
     [
         maybe(
             http_file,
-            name = "update_deb_packages_{}".format(platform),
+            name = "debian_package_manager_{}".format(platform),
             executable = True,
             sha256 = BINARY[LATEST_VERSION][platform],
             urls = [

@@ -1,4 +1,4 @@
-workspace(name = "rules_deb_packages")
+workspace(name = "deb_packages")
 
 load(":internal_deps.bzl", "internal_deps")
 
@@ -6,10 +6,6 @@ internal_deps()
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
-load("//cmd/update_deb_packages:deps.bzl", "go_dependencies")
-
-# gazelle:repository_macro cmd/update_deb_packages/deps.bzl%go_dependencies
-go_dependencies()
 
 go_rules_dependencies()
 

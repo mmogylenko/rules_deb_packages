@@ -1,0 +1,8 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "rhttp",
+    srcs = ["rhttp.go"],
+    importpath = "github.com/mmogylenko/rules_deb_packages/cmd/debian_package_manager/pkg/rhttp",
+    visibility = ["//visibility:public"],
+)
