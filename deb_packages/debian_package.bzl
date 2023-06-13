@@ -54,8 +54,8 @@ merge_providers(
 
 _attrs = {
     "package_name": attr.string(mandatory = True),
-    "urls": attr.string_list(mandatory = True),
     "sha256": attr.string(mandatory = True),
+    "urls": attr.string_list(mandatory = True),
 }
 
 SOURCE_BUILD_TMPL = """\

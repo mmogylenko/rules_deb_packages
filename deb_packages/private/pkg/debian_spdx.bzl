@@ -50,9 +50,9 @@ debian_spdx = rule(
         "control": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz"]),
         "data": attr.label(mandatory = True, allow_single_file = [".tar", ".tar.xz", "tar.gz"]),
         "package_name": attr.string(mandatory = True),
+        "sha256": attr.string(mandatory = True),
         "spdx_id": attr.string(mandatory = True),
         "urls": attr.string_list(mandatory = True),
-        "sha256": attr.string(mandatory = True),
         "_generator": attr.label(default = ":debian_spdx", executable = True, allow_single_file = True, cfg = "exec"),
     },
 )
