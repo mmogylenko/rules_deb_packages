@@ -8,8 +8,7 @@ gazelle(
     name = "update-repos",
     args = [
         "-from_file=cmd/debian_package_manager/go.mod",
-        "-to_macro=cmd/debian_package_manager/deps.bzl%go_dependencies",
-        "-prune",
+        "-to_macro=cmd/debian_package_manager/deps.bzl%debian_package_manager_deps",
         "-build_file_proto_mode=disable_global",
     ],
     command = "update-repos",

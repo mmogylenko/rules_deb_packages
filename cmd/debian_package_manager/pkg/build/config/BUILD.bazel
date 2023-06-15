@@ -12,7 +12,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_pkg_errors//:go_default_library",
-        "@in_gopkg_yaml_v3//:go_default_library",
+        "@in_gopkg_yaml_v3//:yaml_v3",
     ],
 )
 

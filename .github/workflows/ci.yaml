@@ -25,6 +25,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         directory:
+          - cmd/debian_spdx
           - cmd/debian_package_manager
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -61,6 +62,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         directory:
+          - cmd/debian_spdx
           - cmd/debian_package_manager
 
     steps:

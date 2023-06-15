@@ -54,8 +54,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
-      - name: Prepare release notes and artifacts
-        run: .github/workflows/release_prep.sh ${{ env.GITHUB_REF_NAME }} > release_notes.txt
+      # - name: Prepare release notes and artifacts
+      #   run: .github/workflows/release_prep.sh ${{ env.GITHUB_REF_NAME }} > release_notes.txt
       - name: debug-show-dir2
         run: |
           ls -la dist/
@@ -64,6 +64,6 @@ jobs:
         with:
           prerelease: false
           generate_release_notes: true
-          body_path: release_notes.txt
+          #body_path: release_notes.txt
           fail_on_unmatched_files: true
           files: dist/*

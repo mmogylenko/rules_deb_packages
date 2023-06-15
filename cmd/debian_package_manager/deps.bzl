@@ -1,9 +1,9 @@
-"""Golang dependencies"""
+"""Installs Go dependencies for the Debian package manager."""
 
 load("@bazel_gazelle//:deps.bzl", "go_repository")
 
-def go_dependencies():
-    """Golang dependencies"""
+def debian_package_manager_deps():
+    """Installs Go dependencies for the Debian package manager."""
     go_repository(
         name = "com_github_cpuguy83_go_md2man_v2",
         build_file_proto_mode = "disable_global",
@@ -11,12 +11,13 @@ def go_dependencies():
         sum = "h1:p1EgwI/C7NhT0JmVkwCD2ZBK8j4aeHQX2pMHHBfMQ6w=",
         version = "v2.0.2",
     )
+
     go_repository(
         name = "com_github_google_go_cmp",
         build_file_proto_mode = "disable_global",
         importpath = "github.com/google/go-cmp",
-        sum = "h1:BKbKCqvP6I+rmFHt06ZmyQtvB8xAkWdhFyr0ZUNZcxQ=",
-        version = "v0.5.6",
+        sum = "h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=",
+        version = "v0.5.9",
     )
     go_repository(
         name = "com_github_inconshreveable_mousetrap",
@@ -60,6 +61,7 @@ def go_dependencies():
         sum = "h1:kpFauv27b6ynzBNT/Xy+1k+fK4WswhN/6PN5WhFAGw8=",
         version = "v0.5.11",
     )
+
     go_repository(
         name = "in_gopkg_check_v1",
         build_file_proto_mode = "disable_global",

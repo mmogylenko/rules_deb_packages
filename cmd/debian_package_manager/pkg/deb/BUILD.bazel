@@ -27,5 +27,5 @@ go_test(
     ],
     data = glob(["testdata/**"]),
     embed = [":deb"],
-    deps = ["@com_github_google_go_cmp//cmp:go_default_library"],
+    deps = ["@com_github_google_go_cmp//cmp"],
 )
