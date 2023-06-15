@@ -1,8 +1,17 @@
-workspace(name = "deb_packages")
+workspace(name = "rules_deb_packages")
 
-load(":internal_deps.bzl", "internal_deps")
+load(":internal_deps.bzl", "rules_deb_internal_deps")
 
-internal_deps()
+rules_deb_internal_deps()
+
+#load("//deb:repositories.bzl", "deb_register_toolchains", "rules_deb_dependencies")
+
+#rules_deb_dependencies()
+
+#deb_register_toolchains(
+#    name = "deb_register_toolchains",
+#    deb_version = "0.0.1",
+#)
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
@@ -13,9 +22,8 @@ go_dependencies()
 
 go_rules_dependencies()
 
-go_register_toolchains(version = "1.20.4")
+go_register_toolchains(version = "1.19.3")
 
-# gazelle:repo bazel_gazelle
 gazelle_dependencies()
 
 load("@buildifier_prebuilt//:deps.bzl", "buildifier_prebuilt_deps")
