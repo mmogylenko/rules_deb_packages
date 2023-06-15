@@ -21,6 +21,7 @@ func pkgID(id string) string {
 	id = strings.ReplaceAll(id, "_", "-underscore-")
 	id = strings.ReplaceAll(id, ":", "-colon-")
 	id = strings.ReplaceAll(id, "@", "-at-")
+
 	return id
 }
 
@@ -44,26 +45,32 @@ func parseDebControl(r io.Reader) (map[string]string, error) {
 	s.Buffer(megaBuffer, maxCap)
 
 	ln := 0
+
 	for s.Scan() {
 		line := s.Text()
 		ln++
 
-		if continuation.MatchString(line) {
+		switch {
+		case continuation.MatchString(line):
 			if currentKey == "" || len(currentEntry) == 0 {
 				return nil, fmt.Errorf("bad indentation on line %d: %q", ln, line)
 			}
+
 			currentEntry[currentKey] += "\n" + strings.TrimSpace(line)
-		} else if strings.Contains(line, separator) {
+
+		case strings.Contains(line, separator):
 			sp := strings.SplitN(line, separator, 2)
+
 			currentKey = strings.TrimSpace(sp[0])
 			if _, ok := currentEntry[currentKey]; ok {
 				return nil, fmt.Errorf("duplicate key %q on line %d: %q", currentKey, ln, line)
 			}
+
 			currentEntry[currentKey] = strings.TrimSpace(sp[1])
-		} else {
+
+		default:
 			return nil, fmt.Errorf("no indentation or delimiter on line %d: %q", ln, line)
 		}
-
 	}
 
 	if s.Err() != nil {
@@ -74,7 +81,10 @@ func parseDebControl(r io.Reader) (map[string]string, error) {
 }
 
 func main() {
-	var control, output, sha256, url, id, copyright, generates string
+	var (
+		control, output, sha256, url, id, copyright, generates string
+		copyrightBytes                                         []byte
+	)
 
 	flag.StringVar(&control, "control", "", "")
 	flag.StringVar(&output, "output", "", "")
@@ -82,25 +92,27 @@ func main() {
 	flag.StringVar(&id, "id", "", "")
 	flag.StringVar(&copyright, "copyright", "", "")
 	flag.StringVar(&generates, "generates", "", "")
-	// TODO: multiple urls. it is not required at the moment since .deb are fetched without a fallback mirror.
-	flag.StringVar(&url, "url", "", "")
+	flag.StringVar(&url, "url", "", "") // TODO: multiple URLs.
 	flag.Parse()
 
 	read, err := os.Open(control)
 	if err != nil {
 		log.Fatalln(err)
 	}
+
 	mp, err := parseDebControl(read)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	copyrightText := "NOASSERTION"
+
 	if copyright != "" {
-		copyrightBytes, err := os.ReadFile(copyright)
+		copyrightBytes, err = os.ReadFile(copyright)
 		if err != nil {
 			log.Fatalln(err)
 		}
+
 		copyrightText = string(copyrightBytes)
 	}
 
@@ -152,6 +164,7 @@ func main() {
 			gen,
 		},
 		Relationships: []*v2_3.Relationship{
+			//nolint:gofmt // TODO: fix this.
 			&v2_3.Relationship{
 				RefA:         common.DocElementID{ElementRefID: gen.PackageSPDXIdentifier},
 				RefB:         common.DocElementID{ElementRefID: deb.PackageSPDXIdentifier},
