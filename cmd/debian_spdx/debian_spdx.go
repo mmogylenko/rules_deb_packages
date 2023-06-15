@@ -164,7 +164,7 @@ func main() {
 			gen,
 		},
 		Relationships: []*v2_3.Relationship{
-			//nolint:gofmt // TODO: fix this.
+
 			&v2_3.Relationship{
 				RefA:         common.DocElementID{ElementRefID: gen.PackageSPDXIdentifier},
 				RefB:         common.DocElementID{ElementRefID: deb.PackageSPDXIdentifier},
