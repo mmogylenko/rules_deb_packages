@@ -70,6 +70,5 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
-          args: --config=$GITHUB_WORKSPACE/.golangci.yaml
           version: v1.53
           working-directory: ${{ matrix.directory }}
