@@ -1,0 +1,21 @@
+schemaVersion: 2.0.0
+
+fileExistenceTests:
+  - name: "Root"
+    path: "/"
+    shouldExist: true
+    permissions: "drwxr-xr-x"
+  - name: "ca-certificates"
+    path: "/etc/ca-certificates"
+    shouldExist: true
+    permissions: "drwxr-xr-x"
+fileContentTests:
+  - name: "Debian Distro Check"
+    expectedContents: ['.*NAME="Debian.*', '.*VERSION="12 \(bookworm\)".*']
+    path: "/etc/os-release"
+
+metadataTest:
+  envVars:
+    - key: "PATH"
+      value: '\.*/usr/local/bin\.*'
+      isRegex: true

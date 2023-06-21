@@ -1,0 +1,14 @@
+---
+debian_packages:
+  distros: ["debian12"]
+  archs: ["amd64", "arm64"]
+  packages:
+    - "base-files"
+    - "bash"
+    - "debianutils"
+    - "ca-certificates"
+    - "coreutils"
+    - "libc6"
+    - "libpcre2-8-0"
+    - "libselinux1"
+    - "libtinfo6"

@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "cli",
+    srcs = [
+        "generage.go",
+        "root.go",
+        "update.go",
+    ],
+    importpath = "github.com/mmogylenko/rules_deb_packages/cmd/debian_package_manager/cli",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//cmd/debian_package_manager/pkg/build",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

@@ -1,0 +1,50 @@
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(
+    glob(["*.bzl"]),
+    visibility = ["//docs:__pkg__"],
+)
+
+filegroup(
+    name = "package_content",
+    srcs = glob([
+        "*.bzl",
+        "*.bazel",
+    ]),
+    visibility = ["//deb/private:__pkg__"],
+)
+
+bzl_library(
+    name = "debian_spdx",
+    srcs = ["debian_spdx.bzl"],
+    #visibility = ["//deb/private:__pkg__"],
+    visibility = ["//deb/private/rules:__pkg__"],
+    deps = [
+        "@bazel_skylib//lib:collections",
+        "@bazel_skylib//lib:shell",
+    ],
+)
+
+bzl_library(
+    name = "oci_image_spdx",
+    srcs = ["oci_image_spdx.bzl"],
+    #visibility = ["//deb/private:__pkg__"],
+    visibility = ["//deb/private/rules:__pkg__"],
+    deps = [
+        "@bazel_skylib//lib:collections",
+        "@bazel_skylib//lib:shell",
+    ],
+)
+
+bzl_library(
+    name = "dpkg_status",
+    srcs = ["dpkg_status.bzl"],
+    #visibility = ["//deb/private:__pkg__"],
+    visibility = ["//deb/private/rules:__pkg__"],
+    deps = [
+        "@bazel_skylib//lib:collections",
+        "@bazel_skylib//lib:shell",
+    ],
+)

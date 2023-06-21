@@ -1,0 +1,33 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+# gazelle:prefix github.com/mmogylenko/rules_deb_packages/cmd/oci_image_spdx
+gazelle(name = "gazelle")
+
+gazelle(
+    name = "update-repos",
+    args = [
+        "-from_file=cmd/oci_image_spdx/go.mod",
+        "-to_macro=cmd/oci_image_spdx/deps.bzl%oci_image_spdx_deps",
+        "-build_file_proto_mode=disable_global",
+    ],
+    command = "update-repos",
+)
+
+go_library(
+    name = "oci_image_spdx_lib",
+    srcs = ["oci_image_spdx.go"],
+    importpath = "github.com/mmogylenko/rules_deb_packages/cmd/oci_image_spdx",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@com_github_spdx_tools_golang//json",
+        "@com_github_spdx_tools_golang//spdx/v2/common",
+        "@com_github_spdx_tools_golang//spdx/v2/v2_3",
+    ],
+)
+
+go_binary(
+    name = "oci_image_spdx",
+    embed = [":oci_image_spdx_lib"],
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,29 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+# gazelle:prefix github.com/mmogylenko/rules_deb_packages/cmd/debian_package_manager
+gazelle(name = "gazelle")
+
+gazelle(
+    name = "update-repos",
+    args = [
+        "-from_file=cmd/debian_package_manager/go.mod",
+        "-to_macro=cmd/debian_package_manager/deps.bzl%debian_package_manager_deps",
+        "-build_file_proto_mode=disable_global",
+    ],
+    command = "update-repos",
+)
+
+go_library(
+    name = "debian_package_manager_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/mmogylenko/rules_deb_packages/cmd/debian_package_manager",
+    visibility = ["//visibility:private"],
+    deps = ["//cmd/debian_package_manager/cli"],
+)
+
+go_binary(
+    name = "debian_package_manager",
+    embed = [":debian_package_manager_lib"],
+    visibility = ["//visibility:public"],
+)

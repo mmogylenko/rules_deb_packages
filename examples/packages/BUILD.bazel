@@ -1,0 +1,4 @@
+# Auto Generated BUILD.bazel file
+# Define your targets here
+
+exports_files(glob(["*"]))

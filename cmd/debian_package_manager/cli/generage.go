@@ -1,0 +1,31 @@
+// Copyright 2022 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//	http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+package cli
+
+import (
+	"log"
+
+	"github.com/mmogylenko/rules_deb_packages/cmd/debian_package_manager/pkg/build"
+	"github.com/spf13/cobra"
+)
+
+var (
+	generateCMD = &cobra.Command{
+		Use:   "generate",
+		Short: "Generate a new configuration for packages and bazel config",
+		Run: func(cmd *cobra.Command, args []string) {
+			log.Fatal(build.Generate(snapshotsFile, packagesFile, versionsFile, packagesOutFile))
+		},
+	}
+)

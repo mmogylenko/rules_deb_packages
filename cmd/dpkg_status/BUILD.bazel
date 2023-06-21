@@ -1,0 +1,29 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+# gazelle:prefix github.com/mmogylenko/rules_deb_packages/cmd/dpkg_status
+gazelle(name = "gazelle")
+
+gazelle(
+    name = "update-repos",
+    args = [
+        "-from_file=cmd/dpkg_status/go.mod",
+        "-to_macro=cmd/dpkg_status/deps.bzl%dpkg_status_deps",
+        "-build_file_proto_mode=disable_global",
+    ],
+    command = "update-repos",
+)
+
+go_library(
+    name = "dpkg_status_lib",
+    srcs = ["dpkg_status.go"],
+    importpath = "github.com/mmogylenko/rules_deb_packages/cmd/dpkg_status",
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_ulikunitz_xz//:xz"],
+)
+
+go_binary(
+    name = "dpkg_status",
+    embed = [":dpkg_status_lib"],
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,67 @@
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load("//:defaults.bzl", "deb_pkg")
+
+pkg_tar(
+    name = "etc",
+    srcs = [
+        "group",
+        "passwd",
+    ],
+    mode = "0644",
+    package_dir = "/etc",
+)
+
+[
+    oci_image(
+        name = arch,
+        annotations = {
+            "org.opencontainers.image.description": "Debian Baseed OCI Container Image",
+            "org.opencontainers.image.licenses": "Apache-2.0",
+            "org.opencontainers.image.title": "Base Container",
+            "org.opencontainers.image.vendor": "Mykola Mogylenko",
+            "org.opencontainers.image.version": "12",
+        },
+        architecture = arch,
+        env = {
+            "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        },
+        os = "linux",
+        tars = [
+            ":etc",
+            deb_pkg(arch, "debian12", "bash"),
+            deb_pkg(arch, "debian12", "base-files"),
+            deb_pkg(arch, "debian12", "ca-certificates"),
+            deb_pkg(arch, "debian12", "coreutils"),
+            deb_pkg(arch, "debian12", "debianutils"),
+            deb_pkg(arch, "debian12", "libc6"),
+            deb_pkg(arch, "debian12", "libpcre2-8-0"),
+            deb_pkg(arch, "debian12", "libtinfo6"),
+            deb_pkg(arch, "debian12", "libselinux1"),
+        ],
+    )
+    for arch in [
+        "arm64",
+        "amd64",
+    ]
+]
+
+oci_image_index(
+    name = "index",
+    images = [":{arch}".format(arch = arch) for arch in [
+        "arm64",
+        "amd64",
+    ]],
+)
+
+container_structure_test(
+    name = "test",
+    configs = [
+        "tests.yaml",
+    ],
+    image = select({
+        "@platforms//cpu:arm64": ":arm64",
+        "@platforms//cpu:x86_64": ":amd64",
+    }),
+)

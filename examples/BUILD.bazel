@@ -1,0 +1,18 @@
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_deb_packages//deb:defs.bzl", "update_debian_packages")
+
+update_debian_packages(
+    name = "update-packages",
+    packages = "packages.yaml",
+    packages_out = "packages.bzl",
+    snapshots = "snapshots.yaml",
+    versions_out = "versions.bzl",
+)
+
+# Write Debian Packages, Snapshots and Version to a source tree.
+write_source_files(
+    name = "save_packages",
+    files = {
+        "packages": ":update-packages",
+    },
+)

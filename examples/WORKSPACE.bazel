@@ -1,0 +1,22 @@
+workspace(name = "examples")
+
+new_local_repository(
+    name = "rules_deb_packages",
+    build_file = "BUILD.deb",
+    path = "../",
+)
+
+load("@rules_deb_packages//deb:dependencies.bzl", "rules_deb_dependencies")
+
+rules_deb_dependencies()
+
+load("@rules_deb_packages//deb:repositories.bzl", "deb_packages_register_toolchains")
+
+deb_packages_register_toolchains(
+    name = "deb_packages",
+    version = "0.0.0-7",
+)
+
+load("//packages:packages.bzl", deb_packages_repositories = "repositories")
+
+deb_packages_repositories()
