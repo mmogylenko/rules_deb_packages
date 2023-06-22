@@ -25,7 +25,9 @@ var (
 		Use:   "generate",
 		Short: "Generate a new configuration for packages and bazel config",
 		Run: func(cmd *cobra.Command, args []string) {
-			log.Fatal(build.Generate(snapshotsFile, packagesFile, versionsFile, packagesOutFile))
+			if err := build.Generate(snapshotsFile, packagesFile, versionsFile, packagesOutFile); err != nil {
+				log.Fatal()
+			}
 		},
 	}
 )

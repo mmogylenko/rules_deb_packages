@@ -26,7 +26,9 @@ var (
 		Use:   "update",
 		Short: "Update packages with new versions and bazel config",
 		Run: func(cmd *cobra.Command, args []string) {
-			log.Fatal(build.Update(snapshotsFile, packagesFile, versionsFile, packagesOutFile))
+			if err := build.Update(snapshotsFile, packagesFile, versionsFile, packagesOutFile); err != nil {
+				log.Fatal(err)
+			}
 		},
 	}
 )
